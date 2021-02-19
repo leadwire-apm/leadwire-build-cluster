@@ -1,4 +1,4 @@
-FROM centos:7
+FROM osixia/openldap:1.4.0
 
 ARG BUILD_DATE
 
@@ -9,20 +9,10 @@ LABEL org.label-schema.schema-version="leadwire-portail-${VERSION_PORTAIL}" \
     org.label-schema.vendor="Lead Wire SAS" \
     org.label-schema.license="Private Use" \
     org.label-schema.build-date="${BUILD_DATE}"
+    
+    ENV LDAP_ORGANISATION="Leadwire Organization" \
+    LDAP_DOMAIN="leadwire.io"
+ 
+COPY /requirements/ldap/bootstrap.ldif /container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
 
-## TOOLS
-RUN yum -y install sudo crontabs 
 
-
-RUN yum install epel-release -y
-
-RUN yum -y install openldap compat-openldap openldap-clients openldap-servers openldap-servers-sql openldap-devel && systemctl enable slapd.service
-
-ADD /requirements/ /requirements/
-
-RUN /usr/sbin/slapd -u ldap -h 'ldap:/// ldapi:///' && \
-        /bin/sh /requirements/script/ldap-install.sh
-
-EXPOSE 389 
-
-CMD ["requirements/script/ldap-entrypoint.sh"]

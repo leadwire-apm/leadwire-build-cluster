@@ -1,0 +1,84 @@
+dn: ou=people,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=sessions,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalUnit
+ou: sessions
+
+dn: ou=roles,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalUnit
+ou: roles
+
+dn: ou=apm,ou=roles,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalUnit
+ou: roles
+ou: apm
+
+dn: cn=admin,ou=people,dc=leadwire,dc=io
+changetype: add
+cn: admin
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+description: admin
+sn: ADMIN
+givenName: Admin
+mail: contact@leadwire.io
+uid: admin
+userPassword:: e1NTSEF9WEdJckszN0hvWlBIRXFzRWwyMWFEMGdtU09oY25ZSWo=
+
+dn: cn=admin,ou=apm,ou=roles,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalRole
+objectClass: top
+cn: admin
+ou: apm
+roleOccupant: cn=admin,ou=people,dc=leadwire,dc=io
+
+dn: cn=tuser,ou=people,dc=leadwire,dc=io
+changetype: add
+cn: tuser
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+description: test user
+sn: USER
+givenName: Test
+mail: test.user@yahoo.fr
+uid: tuser
+userPassword:: e1NTSEF9KzM3dEEzb0M1S1RqeFVPek0zK29WQ2NkSlltYjRiSnk=
+
+dn: cn=tuser2,ou=people,dc=leadwire,dc=io
+changetype: add
+cn: tuser2
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+description: test user 2
+sn: USER
+givenName: Test 2
+mail: test.user2@yahoo.fr
+uid: tuser2
+userPassword:: e1NTSEF9VFZaOFF1SDFob1NmS1VoenZJMTR0bzJxR0pwN2daMFo=
+
+dn: cn=org1,ou=apm,ou=roles,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalRole
+objectClass: top
+roleOccupant: cn=tuser,ou=people,dc=leadwire,dc=io
+cn: org1
+
+dn: cn=org2,ou=apm,ou=roles,dc=leadwire,dc=io
+changetype: add
+objectClass: organizationalRole
+objectClass: top
+roleOccupant: cn=tuser2,ou=people,dc=leadwire,dc=io
+cn: org2

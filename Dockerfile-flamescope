@@ -1,0 +1,38 @@
+
+FROM centos:7
+ARG BRANCH
+RUN yum install -y git
+RUN git clone --depth=50 --branch=${BRANCH} https://github.com/leadwire-apm/flamescope.git /flamescope
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN yum install -y nodejs
+RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+RUN rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+RUN yum install -y yarn
+RUN cd /flamescope && \
+      yarn install && \
+      npm run webpack
+FROM python:3-alpine3.8
+
+ARG VERSION_FLAMESCOPE
+ARG BUILD_DATE
+
+MAINTAINER "Wassim Dhib" <wassim.dhib@leadwire.io>
+
+LABEL org.label-schema.schema-version="leadwire-flamescope-${VERSION_FLAMESCOPE}" \
+    org.label-schema.name="Lead Wire APM" \
+    org.label-schema.vendor="Lead Wire SAS" \
+    org.label-schema.license="Private Use" \
+    org.label-schema.build-date="${BUILD_DATE}"
+
+COPY --from=0 /flamescope/app/ /app/app/
+COPY --from=0 /flamescope/run.py /app/run.py
+COPY --from=0 /flamescope/requirements.txt /app/requirements.txt
+RUN apk add  libmagic
+RUN cd /app && \
+   pip3 install -r requirements.txt && \
+   mkdir /profiles && \
+   sed -i -e s/127.0.0.1/0.0.0.0/g -e s~examples~/profiles~g app/config.py
+  
+ WORKDIR "/app"
+ENTRYPOINT ["python", "run.py"]
+EXPOSE 5000/tcp
