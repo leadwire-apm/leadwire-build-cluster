@@ -15,7 +15,7 @@ jobs:
     - stage: build docker image
       script:
       - docker login -u "leadwire" -p $DOCKER_PASSWORD 
-      - docker build -t leadwire/apm-leadwire-portail-ui --build-arg BRANCH=master --build-arg GIT_TOKEN=${GIT_TOKEN} --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -f Dockerfile-leadwire-portail . 
+      - docker build -t leadwire/apm-leadwire-portail-ui --build-arg BRANCH=master --build-arg GIT_TOKEN=${GIT_TOKEN} --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -f Dockerfile-leadwire-portail-ui . 
       - docker tag leadwire/apm-leadwire-portail-ui leadwire/apm-leadwire-portail-ui:${VERSION_LEADWIRE_UI}
       - docker push leadwire/apm-leadwire-portail-ui:${VERSION_LEADWIRE_UI}
       - docker build -t leadwire/apm-leadwire-portail --build-arg VERSION_PORTAIL=${VERSION_PORTAIL} --build-arg BRANCH=development --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -f Dockerfile-leadwire-portail . 
