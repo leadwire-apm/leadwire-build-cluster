@@ -1,0 +1,2 @@
+FROM amazon/opendistro-for-elasticsearch:1.13.2
+RUN echo 'webservice-bind-host = 0.0.0.0' >> /usr/share/elasticsearch/plugins/opendistro-performance-analyzer/pa_config/performance-analyzer.properties
