@@ -1,3 +1,4 @@
+ARG BRANCH=development
 FROM centos:7
 ARG BRANCH
 RUN yum install -y git
