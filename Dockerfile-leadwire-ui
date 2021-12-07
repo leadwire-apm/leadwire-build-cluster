@@ -3,7 +3,7 @@ FROM centos:7 as build
 ARG BRANCH
 ARG GIT_TOKEN
 RUN yum install -y git
-RUN git clone --depth=50 --branch=${BRANCH} https://github.com/leadwire-apm/leadwire-portail-reactjs.git /leadwire-portail-reactjs
+RUN git clone --depth=50 --branch=${BRANCH} https://www.github.com/leadwire-apm/leadwire-portail-reactjs.git /leadwire-portail-reactjs
 RUN sed -i 's#test.leadwire.io#leadwire.io#g' /leadwire-portail-reactjs/src/config/configuration.js
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install -y nodejs
