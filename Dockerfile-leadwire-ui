@@ -1,7 +1,6 @@
 ARG BRANCH=lot-2
 FROM centos:7 as build
 ARG BRANCH
-ENV GIT_TOKEN
 RUN yum install -y git
 RUN git clone --depth=50 --branch=${BRANCH} https://leadwire-apm:${GIT_TOKEN}@github.com/leadwire-apm/leadwire-portail-reactjs.git /leadwire-portail-reactjs
 RUN sed -i 's#test.leadwire.io#leadwire.io#g' /leadwire-portail-reactjs/src/config/configuration.js
