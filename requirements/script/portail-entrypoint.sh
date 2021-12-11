@@ -64,6 +64,10 @@ done
 sudo -u nginx php bin/console leadwire:install --env=prod
 ######################
 
+# patch #253 enable rca and pa
+curl -XPOST $host/_plugins/_performanceanalyzer/cluster/config -H 'Content-Type: application/json' -d '{"enabled": true}' -u "${userpass}" -k
+curl -XPOST $host/_plugins/_performanceanalyzer/rca/cluster/config -H 'Content-Type: application/json' -d '{"enabled": true}' -u "${userpass}" -k
+
 
 else
     echo "-- Not first container startup --"
